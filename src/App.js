@@ -29,6 +29,7 @@ function Forms() {
               name="firstName"
               type="text"
               validate={validateFirstName}
+              
             />
             {errors.firstName && <div>{errors.firstName}</div>}
 
@@ -103,10 +104,21 @@ function checkError(values, props) {
 function validateFirstName(value) {
   let error;
   if (!value) {
-    error = 'Поле не заполнено';
+    error = <span>Поле не заполнено</span>;
+  } else if (value !== [/^[А-Я][а-я]{1,}$/mg]) {
+    error = 
+      <span>
+        Имя не соответствует требованиям<br/>
+        * только кириллица<br/>
+        * первая буква заглявная
+      </span>;
   }
+
   return error;
 }
+
+
+
 
 function App() {
   return (
