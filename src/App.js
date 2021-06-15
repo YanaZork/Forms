@@ -7,54 +7,53 @@ function Forms() {
   return (
     <div>
       <Formik
-        initialValues={{ 
-          firstName: '', 
-          agreement: false, 
-          switcher:'no', 
+        initialValues={{
+          firstName: '',
+          agreement: false,
+          switcher: 'no',
           gender: 'nSpecified',
           texter: ''
         }}
-        onSubmit={(value) => setFormValue(JSON.stringify(value))}
+
+        onSubmit={
+          // Пытаюсь тут вызвать ф-цию
+          //checkError(value)
+          (value) => setFormValue(JSON.stringify(value))
+        }
       >
+        {({ errors, touched, isValidating }) => (
         <Form>
           <div>
             Ваше имя:<br />
             <Field
               name="firstName"
               type="text"
+              validate={validateFirstName}
             />
+            {errors.firstName && <div>{errors.firstName}</div>}
 
           </div>
           <br />
           <div>
             Выберите любимые цвета:<br />
-            <Field
-              name="green"
-              type="checkbox"
-            /> Зеленый <br />
-            <Field
-              name="red"
-              type="checkbox"
-            /> Красный <br />
-            <Field
-              name="blue"
-              type="checkbox"
-            /> Голубой <br />
+            <Field name="green" type="checkbox"/> Зеленый <br />
+            <Field name="red" type="checkbox"/> Красный <br />
+            <Field name="blue" type="checkbox"/> Голубой <br />
           </div>
           <br />
 
           <div>
-          Вы согласны с правилами соглашения?<br />
-          <Field
+            Вы согласны с правилами соглашения?<br />
+            <Field
               name="switcher"
               type="radio"
-              value = "yes"
+              value="yes"
             /> Да
 
             <Field
               name="switcher"
               type="radio"
-              value = "no"
+              value="no"
             /> Нет <br />
           </div>
           <br />
@@ -71,7 +70,7 @@ function Forms() {
 
           <div>
             Выши пожелания:<br />
-            <Field 
+            <Field
               as='textarea'
               name='texter'
             />
@@ -86,12 +85,27 @@ function Forms() {
           </div>
           <br />
 
-          
         </Form>
+        )}
       </Formik>
       {formValue}
     </div>
   );
+}
+/*
+//ф-ция для проверок
+function checkError(values, props) {
+
+  return ();
+}
+*/
+
+function validateFirstName(value) {
+  let error;
+  if (!value) {
+    error = 'Поле не заполнено';
+  }
+  return error;
 }
 
 function App() {
